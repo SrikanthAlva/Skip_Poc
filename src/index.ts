@@ -38,7 +38,7 @@ async function skip() {
 			onlyTestnets: false,
 		})
 		// let sei = chains.find((chn: any) => chn.chainName === 'sei')
-		// let arb = chains.find((chn: any) => chn.chainName.toLowerCase() === 'Polygon')
+		// let pol = chains.find((chn: any) => chn.chainName.toLowerCase() === 'Polygon')
 
 		// get assets filtered by chain id
 		// assets = await client.assets({
@@ -73,24 +73,24 @@ async function skip() {
 
 const getRoute = async () => {
 	const route = await client.route({
-		amountIn: '5000000',
+		amountIn: '3000000',
 		sourceAssetDenom: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
 		sourceAssetChainID: '137',
 		destAssetDenom: 'ibc/CA6FBFAF399474A06263E10D0CE5AEBBE15189D6D4B2DD9ADE61007E68EB9DB0',
 		destAssetChainID: 'pacific-1',
 		cumulativeAffiliateFeeBPS: '0',
-		// smartRelay: true,
-		// smartSwapOptions: {
-		// 	evmSwaps: true,
-		// 	splitRoutes: true,
-		// },
+		smartRelay: true,
+		smartSwapOptions: {
+			evmSwaps: true,
+			splitRoutes: true,
+		},
 		// allowMultiTx: true,
-		// allowUnsafe: true,
+		allowUnsafe: true,
 	})
 
 	// console.log(route)
 
-	console.log(route.requiredChainAddresses)
+	console.log(route.requiredChainAddresses) // Poly,osmo,noble,sei
 
 	// await client.messages()
 
@@ -139,6 +139,7 @@ const getRoute = async () => {
 // Generates a Cosmos signer for a given chainID,
 // loading the mnemonic from the environment
 const getCosmosSigner = async (chainID: any) => {
+	// osmosis, noble, sei
 	// load mnemonic from environment
 	const mnemonic = process.env.MNEMONIC
 	if (!mnemonic) {
